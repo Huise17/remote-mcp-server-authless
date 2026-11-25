@@ -100,10 +100,10 @@ function createServer(apiKey: string) {
 export default {
   fetch(request: Request, env: AppEnv, ctx: ExecutionContext) {
     if (request.method !== "OPTIONS") {
-      const token = request.headers.get("Authorization");
-      if (token !== `Bearer ${env.MCP_ACCESS_TOKEN}`) {
-        return new Response("Unauthorized", { status: 401 });
-      }
+     const token = request.headers.get("x-api-key");
+if (token !== env.MCP_ACCESS_TOKEN) {
+  return new Response("Unauthorized", { status: 401 });
+}
     }
 
     const handler = createMcpHandler(
